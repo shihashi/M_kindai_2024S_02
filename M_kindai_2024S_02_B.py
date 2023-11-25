@@ -9,6 +9,7 @@
 # see https://opensource.org/licenses/mit-license.php
 #
 
+from abc import ABCMeta, abstractmethod
 from collections.abc import Iterable, Sequence, Callable
 from typing import Self, Literal
 from itertools import permutations, product
@@ -19,13 +20,14 @@ COINS: Sequence[Coin] = (1, 5, 10, 50, 100, 500)
 class NotUniqueException(Exception):
     pass
 
-class Question:
+class Question(metaclass=ABCMeta):
     '''基底クラス'''
     def __init__(self, letters: str, condition: Callable[[Sequence[Coin]], bool]):
         self.__letters: str = letters
         self._condition: Callable[[Sequence[Coin]], bool] = condition
         self._value: int = 0
 
+    @abstractmethod
     def count(self, arrangement: Sequence[Coin]) -> None:
         pass
 
